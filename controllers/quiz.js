@@ -184,23 +184,24 @@ exports.randomplay = (req, res, next) => {
         });
 };
 
-    exports.randomcheck = (req, res, next) => {
-        req.session.randomPlay = req.session.randomPlay || [];
-        const answer = req.query.answer || "";
-        const answerRight = req.quiz.answer;
-        const result = answer.toLowerCase().trim() === answerRight.toLowerCase().trim();
-        let score = req.session.randomPlay.length || 0;
-        if (result) {
-            if (req.session.randomPlay.indexOf(req.quiz.id) === -1) {
-                req.session.randomPlay.push(req.quiz.id);
-                score = req.session.randomPlay.length;
-            }
-        } else {
-            req.session.randomPlay = [];
+
+exports.randomcheck = (req, res, next) => {
+    req.session.randomPlay = req.session.randomPlay || []; 
+    const answer = req.query.answer || ""; 
+    const answerRight = req.quiz.answer; 
+    const result = answer.toLowerCase().trim() === answerRight.toLowerCase().trim();
+    let score = req.session.randomPlay.length || 0;
+    if (result) {
+        if (req.session.randomPlay.indexOf(req.quiz.id) === -1) {
+            req.session.randomPlay.push(req.quiz.id);
+            score = req.session.randomPlay.length;
         }
-        res.render('quizzes/random_result', {
-            answer,
-            result,
-            score
-        });
-    };
+    } else {
+        req.session.randomPlay = [];
+    }
+    res.render('quizzes/random_result', {
+        answer,
+        result,
+        score
+    });
+};
