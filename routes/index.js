@@ -39,7 +39,6 @@ router.get([
     '/users/:id(\\d+)/quizzes',
     '/quizzes'], saveBack);
 
-//-----------------------------------------------------------
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -121,7 +120,7 @@ router.get('/quizzes/:quizId(\\d+)/play',  quizController.play);
 router.get('/quizzes/:quizId(\\d+)/check', quizController.check);
 
 
-<<<<<<< HEAD
+
 
 router.post('/quizzes/:quizId(\\d+)/tips',
     sessionController.loginRequired,
@@ -136,8 +135,19 @@ router.delete('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)',
     tipController.destroy);
 
 
-=======
+router.get('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)/edit',
+    sessionController.loginRequired,
+    tipController.adminOrAuthorRequired,
+    tipController.edit);
+
+router`.put('quizzes/:quizId(\\d+)/tips/:tipId(\\d+)',
+		sessionController.loginRequired,
+		tipController.adminOrAuthorRequired,    //(mw para que podamos editar un tip solo si somos admin o el autor que lo ha creado)
+		tipController.update);
+
+
+
 router.get('/quizzes/randomplay',                quizController.randomplay);
 router.get('/quizzes/randomcheck/:quizId(\\d+)', quizController.randomcheck);
->>>>>>> practica6
+
 module.exports = router;
